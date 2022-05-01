@@ -3,12 +3,8 @@
 set -e
 
 function post_slack {
-    local value="$1"
-    echo $value
-    echo $2
-    echo $INPUT_JOB_URL
     local webhook_url='https://hooks.slack.com/services/'${INPUT_SLACK_TOKEN}
-    local payload="{\"text\":\"Secrets detected in repo :: $INPUT_JOB_URL\"}"
+    local payload="{\"attachments\":[{ \"title\":\"Error:\", \"color\": \"#FF0000\", \"text\":\"Secrets detected in repo: $1 \" }, { \"title\":\"Link:\", \"color\": \"#FF0000\", \"text\":\"$INPUT_JOB_URL\" }] }"}"
     curl -X POST -H "Content-type: application/json" --data "$payload" $webhook_url
 }
 
