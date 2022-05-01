@@ -8,10 +8,15 @@ inputs:
   slack_token:
     description: "slack webhook token"
     required: false
-    default: ""    
+    default: ""  
+  job_url:
+    description: "Job URL"
+    required: false
+    default: ""        
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
     - ${{ inputs.baseline_file }}
     - ${{ inputs.slack_token }}
+    - ${{ inputs.job_url }}
