@@ -9,6 +9,8 @@ function post_slack {
     curl -X POST -H "Content-type: application/json" --data "$payload" $slack_url
 }
 
+post_slack "secret found"
+
 if [ -f "${INPUT_BASELINE_FILE}" ]; then
   cp ${INPUT_BASELINE_FILE} .secrets.new
   detect-secrets scan --baseline .secrets.new $(find . -type f ! -name '.secrets.*' ! -name 'go.sum' ! -name 'go.mod' ! -path '*/.git*')
