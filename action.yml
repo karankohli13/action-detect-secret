@@ -1,6 +1,5 @@
 name: "Secret Scanning with detect-secrets"
 description: "Scan Secret Repository with detect-secret"
-author: "karan"
 inputs:
   baseline_file:
     description: "detect-secrets baseline file"
