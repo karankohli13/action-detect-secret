@@ -2,8 +2,6 @@
 
 set -e
 
-webhook_url = 'https://hooks.slack.com/services/' + ${INPUT_SLACK_TOKEN}
-
 if [ -f "${INPUT_BASELINE_FILE}" ]; then
   cp ${INPUT_BASELINE_FILE} .secrets.new
   detect-secrets scan --baseline .secrets.new $(find . -type f ! -name '.secrets.*' ! -name 'go.sum' ! -name 'go.mod' ! -path '*/.git*')
@@ -22,6 +20,7 @@ fi
 
 
 send_notification(text) {
+  local webhook_url = 'https://hooks.slack.com/services/' + ${INPUT_SLACK_TOKEN}
   local color='good'
   if [ $1 == 'ERROR' ]; then
     color='danger'
