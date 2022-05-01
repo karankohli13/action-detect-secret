@@ -17,9 +17,10 @@ if [ -f "${INPUT_BASELINE_FILE}" ]; then
   if (diff <(list_secrets .secrets.baseline) <(list_secrets .secrets.new) | grep ">"); then
     echo ""
     echo "⚠️ Detected new secrets in the repo"
-    echo $INPUT_SLACK_TOKEN
     if [ -f "${INPUT_SLACK_TOKEN}" ]; then
+      echo "1"
       run=$GITHUB_SERVER_URL"/"$GITHUB_REPOSITORY"/actions/runs/"$GITHUB_RUN_ID
+      echo $run
       post_slack $GITHUB_REPOSITORY $run
     fi  
     exit 1
