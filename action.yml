@@ -1,0 +1,18 @@
+name: "Secret Scanning with detect-secrets"
+description: "Scan Secret Repository with detect-secret"
+author: "karan"
+inputs:
+  baseline_file:
+    description: "detect-secrets baseline file"
+    required: false
+    default: "./.secrets.baseline"
+  slack_token:
+    description: "slack webhook token"
+    required: false
+    default: ""    
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.baseline_file }}
+    - ${{ inputs.slack_token }}
