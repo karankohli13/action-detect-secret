@@ -10,7 +10,7 @@ if [ -f "${INPUT_BASELINE_FILE}" ]; then
     echo ""
     echo "⚠️ Detected new secrets in the repo"
     if (${INPUT_SLACK_TOKEN}); then
-      send_notification "secret found"
+      post_slack "secret found"
     exit 1
   fi
 else
@@ -18,19 +18,9 @@ else
   exit -1
 fi
 
-
-send_notification() {
-  local text = "${1}"
-  local webhook_url = 'https://hooks.slack.com/services/' + ${INPUT_SLACK_TOKEN}
-  local color='good'
-  if [ $1 == 'ERROR' ]; then
-    color='danger'
-  elif [ $1 == 'WARN' ]; then
-    color = 'warning'
-  fi
-  local message="payload={
-    \""text"\": \"$text\",
-    \"attachments\":[{\"pretext\":\"$2\",\"text\":\"$3\",\"color\":\"$color\"}]}"
-
-  curl -X POST --data-urlencode "$message" ${SLACK_WEBHOOK_URL}
+function post_slack {
+    local value = "${1}"
+    local webhook_url = 'https://hooks.slack.com/services/' + ${INPUT_SLACK_TOKEN}
+    local payload="{\"text\":\"secret :: $value\"}"
+    curl -X POST -H "Content-type: application/json" --data "$payload" $slack_url
 }
