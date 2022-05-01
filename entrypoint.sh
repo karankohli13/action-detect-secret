@@ -5,6 +5,7 @@ set -e
 function post_slack {
     local value="$2"
     echo $value
+    echo $GITHUB_JOB
     local webhook_url='https://hooks.slack.com/services/'${INPUT_SLACK_TOKEN}
     local payload="{\"text\":\"Secrets detected in repo :: $value\"}"
     curl -X POST -H "Content-type: application/json" --data "$payload" $webhook_url
