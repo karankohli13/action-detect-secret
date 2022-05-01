@@ -10,7 +10,7 @@ if [ -f "${INPUT_BASELINE_FILE}" ]; then
     echo ""
     echo "⚠️ Detected new secrets in the repo"
     if (${INPUT_SLACK_TOKEN}); then
-      send_notification("secret found")
+      send_notification "secret found"
     exit 1
   fi
 else
@@ -19,7 +19,8 @@ else
 fi
 
 
-send_notification(text) {
+send_notification() {
+  local text = "${1}"
   local webhook_url = 'https://hooks.slack.com/services/' + ${INPUT_SLACK_TOKEN}
   local color='good'
   if [ $1 == 'ERROR' ]; then
