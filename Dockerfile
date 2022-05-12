@@ -1,4 +1,5 @@
 FROM        python:3.7.12-alpine3.15
+ENV         INPUT_FLAGS=".secrets.flags"
 ENV         INPUT_BASELINE_FILE=".secrets.baseline"
 ENV         INPUT_SLACK_TOKEN=".secrets.slack_token"
 ENV         INPUT_JOB_URL=".secrets.job_url"
