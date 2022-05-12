@@ -11,7 +11,7 @@ function post_slack {
 
 if [ -f "${INPUT_BASELINE_FILE}" ]; then
   cp ${INPUT_BASELINE_FILE} .secrets.new
-  detect-secrets scan ${INPUT_DETECT_SECRETS_FLAGS} --baseline .secrets.new $(find . -type f ! -name '.secrets.*' ! -name 'go.sum' ! -name 'go.mod' ! -path '*/.git*')
+  detect-secrets scan ${INPUT_FLAGS} --baseline .secrets.new $(find . -type f ! -name '.secrets.*' ! -name 'go.sum' ! -name 'go.mod' ! -path '*/.git*')
   list_secrets() { jq -r '.results | keys[] as $key | "\($key),\(.[$key] | .[])"' "$1" | sort; }
   if (diff <(list_secrets .secrets.baseline) <(list_secrets .secrets.new) | grep ">"); then
     echo ""
