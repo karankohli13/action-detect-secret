@@ -1,6 +1,10 @@
 name: "Secret Scanning with detect-secrets"
 description: "Scan Secret Repository with detect-secret"
 inputs:
+  flags:
+    description: "detect-secrets flags"
+    required: false
+    default: ""
   baseline_file:
     description: "detect-secrets baseline file"
     required: false
@@ -17,6 +21,7 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
+    - ${{ inputs.flags }}
     - ${{ inputs.baseline_file }}
     - ${{ inputs.slack_token }}
     - ${{ inputs.job_url }}
